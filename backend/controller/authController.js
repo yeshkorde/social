@@ -16,14 +16,14 @@ const loginController = async (req, res) => {
         expiresIn: "24h",
       });
       res.cookie("token", token);
-      return res.redirect("http://localhost:5173/");
+      return res.redirect(process.env.FRONTEND_URL);
     } else {
       req.user = user;
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "24h",
       });
       res.cookie("token", token);
-      return res.redirect("http://localhost:5173/");
+      return res.redirect(process.env.FRONTEND_URL);
     }
   } catch (error) {
     console.error(

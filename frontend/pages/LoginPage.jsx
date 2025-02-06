@@ -153,7 +153,7 @@ function LoginPage() {
   useEffect(handleMode, [mode]);
 
   const login = async() =>{
-      window.location.href = 'http://localhost:3000/api/auth/google';
+      window.location.href = `${import.meta.env.VITE_SERVER_BASE_URL}/api/auth/google`;
   }
 
 

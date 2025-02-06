@@ -25,7 +25,7 @@ function SearchUser() {
             return console.log("no data");
           }
           const res = await axios.get(
-            `http://localhost:3000/api/user/SearchUsers?q=${e.target.value}`,
+            `${import.meta.env.VITE_SERVER_BASE_URL}/api/user/SearchUsers?q=${e.target.value}`,
             { withCredentials: true }
           );
 

@@ -6,6 +6,12 @@ import { useEffect, useState, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
 import useUserContext from "../hooks/UserContextHook";
 import axios from "axios";
+import { Outlet } from "react-router-dom";
+import PostsSection from "../components/PostsSection";
+import SavedSection from "../components/SavedSection";
+import ReelsSection from "../components/ReelsSection";
+import LickedSection from "../components/LickedSection";
+
 
 function ProfilePage() {
   const [isProfileChangeOn, setisProfileChangeOn] = useState(false);
@@ -17,6 +23,8 @@ const [isLoding, setisLoding] = useState(false)
   const fileRef = useRef();
   const { toast } = useToast();
   const { setuserData } = useUserContext();
+  const moveRef = useRef();
+  const [activeSection, setactiveSection] = useState(<PostsSection/>)
 
   useGSAP(() => {
     const tl = gsap.timeline({
@@ -150,7 +158,73 @@ useEffect(()=>{
   };
 
  
+const moveToPosts = () =>{
 
+  if(activeSection === <PostsSection/>) return
+
+  setactiveSection(<PostsSection/>)
+
+  gsap.to(moveRef.current,{
+    x:130,
+    ease:"back.out"
+  })
+  gsap.from(moveRef.current,{
+    borderRadius:0,
+    backgroundColor:"green"
+  })
+}
+
+const moveToSaved = () =>{
+
+  if(activeSection === <SavedSection/>) return
+
+  setactiveSection(<SavedSection/>)
+
+  gsap.to(moveRef.current,{
+    x:440,
+        ease:"back.out"
+  })
+  gsap.from(moveRef.current,{
+
+    borderRadius:0,
+    backgroundColor:"red"
+  })
+}
+
+const moveToSReels = () =>{
+
+  
+  if(activeSection === <ReelsSection/>) return
+
+  setactiveSection(<ReelsSection/>)
+
+  gsap.to(moveRef.current,{
+    x:750,
+        ease:"back.out"
+  })
+  gsap.from(moveRef.current,{
+
+    borderRadius:0,
+    backgroundColor:"blue"
+  })
+}
+
+const moveToSLicked = () =>{
+
+    
+  if(activeSection === <LickedSection/>) return
+
+  setactiveSection(<LickedSection/>)
+
+  gsap.to(moveRef.current,{
+    x:1060,
+        ease:"back.out"
+  })
+  gsap.from(moveRef.current,{
+    borderRadius:0,
+    backgroundColor:"yellow"
+  })
+}
 
   return (
     <div className={`h-full relative ${
@@ -281,6 +355,20 @@ useEffect(()=>{
               </button>
             </div>
           </div>
+        </div>
+        <div className="w-full p-4 mt-10 bg-white rounded-xl shadow-[3px_3px_30px] shadow-[#e6e6e6] dark:shadow-[#000]  dark:border dark:border-[#2b2b2b]   dark:bg-[#000000] ">
+<div className="w-full flex justify-around text-[#161616] dark:text-white items-center">
+<p className="ibm-plex-sans-semibold cursor-pointer " onClick={moveToPosts}>Posts</p>
+<p className="ibm-plex-sans-semibold cursor-pointer" onClick={moveToSaved}>Saved</p>
+<p className="ibm-plex-sans-semibold cursor-pointer" onClick={moveToSReels}>Reels</p>
+<p className="ibm-plex-sans-semibold cursor-pointer" onClick={moveToSLicked}>Liked</p>
+</div>
+<div ref={moveRef} className="h-1 mt-1 dark:bg-white translate-x-[130px] w-12 bg-[#121212] rounded-2xl ">
+
+</div>
+        </div>
+        <div className="h-10 w-full rounded-xl bg-red-400 mt-10">
+         {activeSection}
         </div>
       </div>
     </div>

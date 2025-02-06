@@ -12,7 +12,8 @@ import ProfilePage from "../pages/ProfilePage";
 import ComponentContextProvider from "../context/ComponentContext";
 import { Toaster } from "@/components/ui/toaster";
 import SocketContextProvider from "../context/SocketContext";
-import SetUserName from "../pages/SetUserName";
+import CreatePostPage from "../pages/CreatePostPage";
+
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <MainLayout />,
+    element: <MainLayout/>,
     children: [
       {
         path: "",
@@ -32,8 +33,8 @@ const router = createBrowserRouter([
         element: <Protect page={<ProfilePage />} />,
       },
       {
-        path: "/details",
-        element:<Protect page={<SetUserName />}/>,
+        path:"/create",
+        element:<Protect page={<CreatePostPage/>}/>
       },
       {
         path: "*",

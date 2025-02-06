@@ -14,7 +14,7 @@ function Protect({ page }) {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/auth/getMe", {
+      const res = await axios.get(`${import.meta.env.VITE_SERVER_BASE_URL}/api/auth/getMe`, {
         withCredentials: true,
       });
       if (res.data.currentuser) {

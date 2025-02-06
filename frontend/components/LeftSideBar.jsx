@@ -311,8 +311,8 @@ setisNoteficationNoSeen(unseenNotifications.length)
             </div>:""
             }
             </div>
-
-            <div className="w-full h-14 dark:shadow-darkneumorphic dark:border dark:border-[#2b2b2b] dark:bg-[#000000] flex justify-center item cursor-pointer items-center bg-[#fff]  rounded-full shadow-neumorphic hover:shadow-lg">
+           <Link to={"/create"}>
+           <div className="w-full h-14 dark:shadow-darkneumorphic dark:border dark:border-[#2b2b2b] dark:bg-[#000000] flex justify-center item cursor-pointer items-center bg-[#fff]  rounded-full shadow-neumorphic hover:shadow-lg">
               <svg
                 aria-label="New post"
                 className="x1lliihq x1n2onr6 x5n08af dark:fill-white"
@@ -358,6 +358,7 @@ setisNoteficationNoSeen(unseenNotifications.length)
                 ></line>
               </svg>
             </div>
+           </Link>
             <Link to={"/profile"}>
               <div className="w-full h-14 flex justify-center dark:border object-cover object-top dark:border-[#2b2b2b] dark:bg-[#000000] dark:shadow-darkneumorphic item items-center cursor-pointer bg-[#fff]  rounded-full shadow-neumorphic hover:shadow-lg ">
                 <div className="h-full w-full rounded-full p-1 ">
