@@ -3,7 +3,7 @@ import gsap from "gsap";
 import images from "../utils/imsges";
 import { useEffect,useRef,useState } from "react";
 import useModecontext from "../hooks/ModeContextHook";
-import axios from "axios"
+
 function LoginPage() {
   const { mode, toggleMode } = useModecontext();
   const lightRef = useRef(null);

@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-
+import mongoose from "mongoose";
 
 const notificationSchema = new mongoose.Schema(
   {
@@ -8,30 +7,20 @@ const notificationSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    message: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    recipient: {
+    sender:{
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', 
+      ref: "user",
       required: true,
     },
-    status: {
-      type: String,
-      enum: ['unread', 'read'], 
-      default: 'unread',
+    isSeen: {
+      type: Boolean,
+      default: false,
     },
     type: {
       type: String,
-      enum: ['info', 'warning', 'success', 'error', 'alert', 'reminder'], 
+      enum: ["follow", "warning", "success", "error", "alert", "reminder"],
       required: true,
-      default: 'info',
-    },
-    metadata: {
-      type: Object, 
-      default: {},
+      default: "info",
     },
   },
   {
@@ -39,6 +28,4 @@ const notificationSchema = new mongoose.Schema(
   }
 );
 
-
-export default mongoose.model('Notification', notificationSchema);
-
+export default mongoose.model("Notifications", notificationSchema);

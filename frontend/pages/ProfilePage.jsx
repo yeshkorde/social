@@ -83,6 +83,7 @@ const [isLoding, setisLoding] = useState(false)
     const res = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/api/user/UpdateProfileImage?q=remove`,null,{
       withCredentials:true
     })
+    
     if (res.data.sucess) {
       setuserData(res.data.currentuser);
       setisProfileChangeOn(false);
@@ -101,7 +102,7 @@ const [isLoding, setisLoding] = useState(false)
 
 useEffect(()=>{
   if(isProfileChangeOn){
-   const tl = gsap.timeline();
+  //  const tl = gsap.timeline();
 
   }
 },[isProfileChangeOn])
@@ -152,7 +153,9 @@ useEffect(()=>{
 
 
   return (
-    <div className="h-full relative  w-[500%]">
+    <div className={`h-full relative ${
+          isOn.isNotificationOn || isOn.isSearchOn ? "-z-[3]" : ""
+        }  w-[500%] `}>
       <div
         className="h-[710px] w-full absolute bg-white/60 dark:bg-black/60 z-30 flex justify-center items-center hidden p-4"
         ref={ProfileChangeRef}
@@ -244,15 +247,16 @@ useEffect(()=>{
         </div>
       </div>
       <div
-        className={`h-full w-full bg-white shadow-lg dark:border dark:border-[#2b2b2b] ${
-          isOn.isNotificationOn || isOn.isSearchOn ? "-z-[3]" : ""
-        }  dark:bg-[#000000]  rounded-2xl p-10 overflow-hidden relative`}
+        className={`h-full w-full bg-white shadow-lg dark:border dark:border-[#2b2b2b]   dark:bg-[#000000]  rounded-2xl p-10 overflow-hidden relative`}
       >
         <div className="h-80 w-full box bg-[#ffffff] dark:bg-[#000]  rounded-3xl relative overflow-hidden shadow-[3px_3px_30px] shadow-[#e6e6e6] dark:shadow-[#000]">
           <div className="h-full  bg-[#fff] w-full dark:bg-black dark:border dark:border-[#2b2b2b] absolute rounded-3xl items-center flex p-6   gap-10">
             <ProfileImage isProfileChange={setisProfileChangeOn} />
             <div className="p-10 h-full w-1/2 flex flex-col gap-2 ">
               <p className="ibm-plex-sans-semibold profileData text-2xl text-[#1f1f1f] dark:text-white">
+                {userData.userName}
+              </p>
+              <p className="ibm-plex-sans-semibold profileData text-md text-[#2e2e2e] dark:text-white">
                 {userData.name}
               </p>
               <p className="ibm-plex-sans-semibold profileData text-md text-[#2e2e2e] dark:text-white">

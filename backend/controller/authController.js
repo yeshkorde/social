@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import userModel from "../models/userModle.js";
 import jwt from "jsonwebtoken";
-
+import {v4 as uuid} from "uuid"
 const loginController = async (req, res) => {
   try {
     const user = await userModel.findOne({ email: req.user._json.email });
@@ -9,6 +9,7 @@ const loginController = async (req, res) => {
       const newUser = await userModel.create({
         email: req.user._json.email,
         name: req.user._json.name,
+        userName:req.user._json.name+"@"+Math.floor(Math.random()*10000),
       });
       req.user = newUser;
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
@@ -54,14 +55,17 @@ const logoutController = async (req, res) => {
 const getMe = async (req, res) => {
   try {
 const token = req.cookies;
-    const data = jwt.verify(token.token, process.env.JWT_SECRET);
-    let currentuser = await userModel.aggregate([
-      {
-        $match:{_id:new mongoose.Types.ObjectId(data.id)}
-      },
-    ])
 
-    currentuser = currentuser[0]
+    const data = jwt.verify(token.token, process.env.JWT_SECRET);
+    let currentuser = await userModel.findOne({_id:data.id}).populate({
+      path:"Notifications",
+      modle:"Notifications",
+      populate:{
+        path:"sender",
+        module:"userModle"
+      }
+    })
+     
 
     if (!token.token || !currentuser) {
       return res.json({ message: "not outanticated user ", status: false });
@@ -69,7 +73,7 @@ const token = req.cookies;
     req.user = currentuser;    
    return res.json({message:"login sucess",currentuser,status:true})
   } catch (error) {
-    console.log(error.message);
+    console.log("some thing wrong in get me ",error.message);
   }
 };
 

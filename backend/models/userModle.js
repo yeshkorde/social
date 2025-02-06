@@ -1,83 +1,96 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
-
-  email: {
-    type: String,
-    required: true,
-  },
-  bio: {
-    type: String,
-  },
-  Dob: {
-    type: String,
-  },
-  name: {
-    type: String,
-  },
-  profileImage:{
-    type:String,
-    default:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png"
-  },
-  isPrivate: {
-    type: Boolean,
-    default: false,
-  },
-  linkes: [
-    {
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+    },
+    SockitId: {
+      type: String,
+      default: "",
+    },
+    userName: {
+      type: String,
+      default: "",
+    },
+    bio: {
       type: String,
     },
-  ],
-  postes: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "post",
+    Dob: {
+      type: String,
     },
-  ],
-  status: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "status",
+    name: {
+      type: String,
     },
-  ],
-  reels: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "reel",
+    profileImage: {
+      type: String,
+      default:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png",
     },
-  ],
-  chates: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "chat",
+    isPrivate: {
+      type: Boolean,
+      default: false,
     },
-  ],
-  saved: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "saved",
+    linkes: [
+      {
+        type: String,
+      },
+    ],
+    postes: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "post",
+      },
+    ],
+    status: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "status",
+      },
+    ],
+    reels: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "reel",
+      },
+    ],
+    chates: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "chat",
+      },
+    ],
+    saved: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "saved",
+      },
+    ],
+    Notifications: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Notifications",
+      },
+    ],
+    followers: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "user",
+      },
+    ],
+    following: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "user",
+      },
+    ],
+    fileId: {
+      type: String,
+      default: "",
     },
-  ],
-  Notifications: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "notification",
-    },
-  ],
-  followers: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "user",
-    },
-  ],
-  following: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "user",
-    },
-  ],
-  
-},{timeseries:true});
-  
+  },
+  { timeseries: true }
+);
 
-export default mongoose.model("user",userSchema)
+export default mongoose.model("user", userSchema);

@@ -7,16 +7,23 @@ function SearchUser() {
   const [error, seterror] = useState("");
 
   const handleSearch = async (e) => {
+
+    const value = e.target.value
+
     try {
-      if (!e.target.value) {
+      if (!value) {
         setUsersData([]);
         return;
       }
   
-
-      setisloading(true);
+      
+        
+        setisloading(true);
       setTimeout(async () => {
-        try {
+        try {          
+          if(!e.target.value) {
+            return console.log("no data");
+          }
           const res = await axios.get(
             `http://localhost:3000/api/user/SearchUsers?q=${e.target.value}`,
             { withCredentials: true }
@@ -35,7 +42,10 @@ function SearchUser() {
         } finally {
           setisloading(false);
         }
-      }, 1000);
+      },1000);
+
+
+      
     } catch (error) {
       console.log("Something went wrong in handleSearch:", error.message);
       setisloading(false);
@@ -43,21 +53,18 @@ function SearchUser() {
   };
 
   return (
-    <div className="h-full w-full pl-28 px-4 pt-6 flex flex-col gap-4 bg-white dark:bg-black">
+    <div className="h-full w-full pl-28 px-4 pt-6 flex flex-col gap-4 bg-white dark:bg-black z-[9999]">
       <h1 className="text-2xl ibm-plex-sans-semibold ml-2 font-semibold text-gray-900 dark:text-white">
-        Search Users
+        Search User Name
       </h1>
 
-      <div className="relative w-full max-w-2xl">
-        <label htmlFor="searchInput" className="sr-only">
-          Search for users
-        </label>
-
+      <div className="relative w-full max-w-2xl bg-gree">
         <input
           id="searchInput"
+          
           type="text"
           placeholder="Search by name..."
-          className="w-full h-12 px-6 pr-12 text-gray-900 dark:text-white bg-white dark:bg-black border-2 border-gray-200 dark:border-[#2e2e2e] rounded-2xl shadow-sm hover:border-blue-300 dark:hover:border-blue-400 focus:outline-none focus:border-blue-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800/30 transition-all duration-200 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+          className="w-full h-12   px-6 pr-12 text-gray-900 dark:text-white bg-white dark:bg-black border-2 border-gray-200 dark:border-[#2e2e2e] rounded-2xl shadow-sm hover:border-blue-300 dark:hover:border-blue-400 focus:outline-none focus:border-blue-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800/30 transition-all duration-200 placeholder:text-gray-400 dark:placeholder:text-gray-400"
           onChange={handleSearch}
         />
 
@@ -123,9 +130,13 @@ function SearchUser() {
               </svg>
           </div>
         ) : (
-          UsersData.map((user) => {
+         <div className="h-full w-full flex flex-col gap-4">
+          {
+           UsersData.map((user) => {
             return <UserCard key={user._id} user={user} />;
           })
+        }
+         </div>
         )}
       </div>
     </div>

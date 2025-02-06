@@ -10,24 +10,30 @@ import MainLayout from "../layout/mainLayout";
 import UserContextProvider from "../context/userContext";
 import ProfilePage from "../pages/ProfilePage";
 import ComponentContextProvider from "../context/ComponentContext";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
+import SocketContextProvider from "../context/SocketContext";
+import SetUserName from "../pages/SetUserName";
 
 const router = createBrowserRouter([
   {
     path: "/login",
-    element:<LoginPage/>,
+    element: <LoginPage />,
   },
   {
     path: "/",
-    element:<MainLayout/>,
+    element: <MainLayout />,
     children: [
       {
         path: "",
-        element: <Protect page={<HomePage/>} />,
+        element: <Protect page={<HomePage />} />,
       },
       {
-        path:"/profile",
-        element:<Protect page={<ProfilePage/>}/>
+        path: "/profile",
+        element: <Protect page={<ProfilePage />} />,
+      },
+      {
+        path: "/details",
+        element:<Protect page={<SetUserName />}/>,
       },
       {
         path: "*",
@@ -37,17 +43,16 @@ const router = createBrowserRouter([
   },
 ]);
 
-
-
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+
     <ComponentContextProvider>
-    <ModeContextProvider>
-      <UserContextProvider>
-      <RouterProvider router={router} />
-      <Toaster/>
-      </UserContextProvider>
-    </ModeContextProvider>
+      <ModeContextProvider>
+        <UserContextProvider>
+        <SocketContextProvider>
+          <RouterProvider router={router} />
+          </SocketContextProvider>
+          <Toaster />
+        </UserContextProvider>
+      </ModeContextProvider>
     </ComponentContextProvider>
-  </StrictMode>
 );

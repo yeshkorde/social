@@ -7,11 +7,21 @@ import authRouter from "./routes/authRouter.js";
 import cookieParser from "cookie-parser";
 import cors from "cors"
 import userRouter from "./routes/userRouter.js"
+import {Server} from "socket.io"
+import http from "http"
+import  {initializeSocket} from "./Sockit.js"
+
 
 const app = express();
-app.use(cors({ origin: 'http://localhost:5173',credentials:true}));
 dotenv.config();
+const server = http.createServer(app)
+
+
+
+
+app.use(cors({ origin: 'http://localhost:5173',credentials:true}));
 app.use(cookieParser())
+
 
 
 connectDB();
@@ -26,15 +36,21 @@ app.use(
   })
 );
 
+
+
 import("./helper/googleStrategy.js");
 app.use(passport.initialize());
 app.use(passport.session());
 
 
+initializeSocket(server)
+
 app.use("/api/auth", authRouter);
 app.use("/api/user",userRouter)
 
 
-app.listen(process.env.PORT, () => {
+
+server.listen(process.env.PORT, () => {
   console.log(`server is runing on port ${process.env.PORT} `);
 });
+
