@@ -1,7 +1,7 @@
-import { useGSAP } from "@gsap/react";
+
 import { useEffect, useState } from "react";
 import gsap from "gsap";
-import animate from "../animations/leftSideAnimations";
+
 import useModecontext from "../hooks/ModeContextHook";
 import useUserContext from "../hooks/UserContextHook";
 import { Link } from "react-router-dom";
@@ -20,7 +20,6 @@ function LeftSideBar() {
 
 
 
-  useGSAP(animate);
 
   useEffect(() => {
     if (isOn.isNotificationOn) {

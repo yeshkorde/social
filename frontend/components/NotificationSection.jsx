@@ -22,17 +22,21 @@ socket.on("/followNotificatio",(data)=>{
 })
 },[])
 
+
+
   return (
 
     <div className="h-screen w-full pl-28 px-4 pt-6 flex flex-col gap-4 bg-white dark:bg-black z-[9999]">
       <h1 className="text-2xl ibm-plex-sans-semibold ml-2 font-semibold text-gray-900 dark:text-white">
         Notifications
       </h1>
-      <div className="flex-1 w-full flex flex-col gap-4 mt-4  relative">
+      {
+        Notifications.length === 0 ? (<div className="ibm-plex-sans-semibold text-center mt-10 text-[#2f2f2f] dark:text-[#e8e8e8]">No Notifications </div>) :(<div className="flex-1 w-full flex flex-col gap-4 mt-4  relative">
         { Notifications?.map((not, ind) => (
          <NotificationCard data={not} key={ind}/>
         ))}
-      </div>
+      </div>)
+      }
     </div>
   );
 }

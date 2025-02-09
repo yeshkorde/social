@@ -7,7 +7,7 @@ let io = null;
 export const initializeSocket = (httpServer) => {
   io = new Server(httpServer, {
     cors: {
-      origin: process.env.FRONTEND_URL, // Ensure frontend URL is correct
+      origin: "http://localhost:5173", // Ensure frontend URL is correct
       methods: ["GET", "POST"],
       allowedHeaders: ["Content-Type", "Authorization"],
       credentials: true,
