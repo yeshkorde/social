@@ -319,7 +319,7 @@ function ProfilePage() {
             className="h-1 mt-1 dark:bg-white translate-x-[130px] w-12 bg-[#1e1e1e] rounded-2xl border"
           ></div>
         </div>
-        <div className="h-10 w-full rounded-xl bg-red-400 mt-10">
+        <div className="h-10 w-full rounded-xl  mt-10">
           {activeSection}
         </div>
       </div>

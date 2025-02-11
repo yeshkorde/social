@@ -10,7 +10,7 @@ import userRouter from "./routes/userRouter.js"
 import {Server} from "socket.io"
 import http from "http"
 import  {initializeSocket} from "./Sockit.js"
-
+import postRouter from "./routes/postRouter.js"
 
 const app = express();
 dotenv.config();
@@ -47,7 +47,7 @@ initializeSocket(server)
 
 app.use("/api/auth", authRouter);
 app.use("/api/user",userRouter)
-
+app.use("/api/post",postRouter)
 
 
 server.listen(process.env.PORT, () => {

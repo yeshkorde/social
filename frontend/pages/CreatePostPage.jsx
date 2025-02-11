@@ -1,11 +1,9 @@
 import useComponentContext from "../hooks/ComponentContextHook";
-import { useState,useRef, useEffect } from "react";
+import { useState,useRef} from "react";
 import gsap from "gsap";
 
 import PostsSection from "../components/PostsSection";
-import SavedSection from "../components/SavedSection";
-import ReelsSection from "../components/ReelsSection";
-import LickedSection from "../components/LickedSection";
+
 import CreatePost from "../components/CreateSections/CreatePost";
 import CreateStory from "../components/CreateSections/CreateStory";
 import CreateReel from "../components/CreateSections/CreateReel";

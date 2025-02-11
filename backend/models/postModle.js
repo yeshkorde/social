@@ -12,9 +12,7 @@ const postSchema = new mongoose.Schema({
     type: String,
   },
   linkes: [
-    {
-      type: String,
-    },
+    
   ],
   likes: [
     {
@@ -35,9 +33,6 @@ const postSchema = new mongoose.Schema({
     },
   ],
   media: [
-    {
-      type: String,
-    },
   ],
 },{timeseries:true});
 

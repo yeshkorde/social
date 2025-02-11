@@ -4,6 +4,7 @@ import useUserContext from "../hooks/UserContextHook";
 import axios from "axios";
 import FollowBtn from "./FollowBtn";
 import getDatesAndTime from "../utils/GetDate";
+import {motion} from "motion/react"
 
 function NotificationCard({ data }) {
   const NoteficationCardRef = useRef();
@@ -33,7 +34,7 @@ function NotificationCard({ data }) {
   };
 
   return (
-    <div
+    <motion.div
       className="  cursor-pointer  hover:bg-[#f4f4f4] dark:border-[#2b2b2b] flex dark:border  w-full bg-white dark:bg-black  items-center gap-4 p-3 rounded-xl shadow-md dark:shadow-lg"
       onClick={(e) => chickNotifications(e)}
       ref={NoteficationCardRef}
@@ -69,7 +70,7 @@ function NotificationCard({ data }) {
           ""
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
 

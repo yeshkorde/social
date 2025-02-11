@@ -1,8 +1,8 @@
-import React from 'react'
+
 
 function PostsSection() {
   return (
-    <div>PostsSection</div>
+    <div className='h-full w-full '>PostsSection</div>
   )
 }
 
