@@ -179,3 +179,21 @@ return res.json({
   })
 }
 } 
+
+
+export const getAllPostsController = async(req,res)=>{
+  try {
+    const postes = await userModle.findOne({
+      _id:req.user._id
+    }).populate({
+      modle:"poste",
+      path:"postes"
+    })
+    res.json({poste:postes.postes,sucess:true})
+  } catch (error) {
+    res.json({
+      message:"internal server error",
+      sucess:false
+    })
+  }
+}
