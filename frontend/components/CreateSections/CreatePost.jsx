@@ -275,7 +275,7 @@ function CreatePost() {
                   onChange={(e) =>
                     settextDta((prev) => ({ ...prev, title: e.target.value }))
                   }
-                  className="w-[800px] h-10 outline-none text-[12px]   bg-transparent border-b border-[#bababa] dark:border-[#282828] px-2 "
+                  className="w-[800px] h-10 outline-none dark:text-white text-[12px]   bg-transparent border-b border-[#bababa] dark:border-[#282828] px-2 "
                   name=""
                   id=""
                 />
@@ -286,7 +286,7 @@ function CreatePost() {
                 </label>
                 <textarea
                   type="text"
-                  className=" h-10 text-[12px] mt-2 outline-none scrollHidden  bg-transparent border-b border-[#bababa] dark:border-[#282828] px-2 resize-none overflow-y-scroll"
+                  className=" h-10 text-[12px] dark:text-white mt-2 outline-none scrollHidden  bg-transparent border-b border-[#bababa] dark:border-[#282828] px-2 resize-none overflow-y-scroll"
                   name=""
                   value={textDta.discription}
                   id=""
@@ -309,7 +309,7 @@ function CreatePost() {
                     </label>
                     <input
                       type="text"
-                      className="w-full h-8 text-[12px] outline-none   bg-transparent border-b  px-4  border-[#bababa] dark:border-[#282828]"
+                      className="w-full h-8 text-[12px] outline-none  dark:text-white bg-transparent border-b  px-4  border-[#bababa] dark:border-[#282828]"
                       name=""
                       id=""
                       onChange={(e) => {
@@ -332,7 +332,7 @@ function CreatePost() {
 
                     <input
                       type="text"
-                      className="w-full h-8  outline-none text-[12px]   bg-transparent border-b border-[#bababa] dark:border-[#282828] px-4"
+                      className="w-full h-8  outline-none text-[12px] dark:text-white   bg-transparent border-b border-[#bababa] dark:border-[#282828] px-4"
                       name=""
                       id=""
                       onChange={(e) => {
@@ -362,7 +362,7 @@ function CreatePost() {
                   transition={{
                     duration: 0.3,
                   }}
-                  className="px-6 py-2 rounded-xl dark:bg-[#0a0a0a] text-[12px] ibm-plex-sans-semibold bg-[#eeeeee] "
+                  className="px-6 py-2 rounded-xl dark:bg-[#0a0a0a] dark:text-white text-[12px] ibm-plex-sans-semibold bg-[#eeeeee] "
                   onClick={handleLiknks}
                 >
                   Add Links

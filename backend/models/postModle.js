@@ -34,7 +34,7 @@ const postSchema = new mongoose.Schema({
   ],
   media: [
   ],
-},{timeseries:true});
+},{timestamps:true});
 
 
 export default mongoose.model("post",postSchema)

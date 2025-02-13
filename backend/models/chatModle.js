@@ -20,7 +20,7 @@ const chatSchema = new mongoose.Schema({
       ref: "user",
     },
   ],
-});
+},{timestamps:true});
 
 
 export default mongoose.model("chat",chatSchema);

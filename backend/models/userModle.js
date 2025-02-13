@@ -90,7 +90,7 @@ const userSchema = new mongoose.Schema(
       default: "",
     },
   },
-  { timeseries: true }
+  { timestamps:true }
 );
 
 export default mongoose.model("user", userSchema);

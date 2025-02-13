@@ -47,7 +47,7 @@ const statusSchema = new mongoose.Schema({
             ref:"user"
         }
       ]
-},{timeseries:true})
+},{timestamps:true})
 
 
 export default mongoose.model("status",statusSchema)

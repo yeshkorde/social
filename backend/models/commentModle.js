@@ -18,7 +18,7 @@ const commentSchema = new mongoose.Schema({
     postId:{
         type:String
     }
-},{timeseries:true})
+},{timestamps:true})
 
 
 export default mongoose.model("comment",commentSchema)

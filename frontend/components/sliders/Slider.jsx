@@ -29,6 +29,7 @@ function Slider({ media }) {
 
     let newWidth, newHeight;
 
+
     if (height > 700) {
       newHeight = 700;
       newWidth = newHeight * aspectRatio;
@@ -38,7 +39,7 @@ function Slider({ media }) {
     }
 
     if (newWidth > 1000) {
-      newWidth = 1000;
+      newWidth = 750;
       newHeight = newWidth / aspectRatio;
     }
 
@@ -49,7 +50,7 @@ function Slider({ media }) {
 
     mediaElement.style.width = `${newWidth}px`;
     mediaElement.style.height = `${newHeight}px`;
-    mediaElement.style.objectFit = "contain";
+    mediaElement.style.objectFit = "cover";
   };
 
 
@@ -74,8 +75,8 @@ function Slider({ media }) {
       {media?.map((m, ind) => (
         <SwiperSlide
           key={ind}
-          className={`flex items-center justify-center ${
-            m.type === "image" ? "" : "w-80 max-h-[700px]"
+          className={`flex items-center justify-center  object-cover${
+            m.type === "image" ? "" : " max-h-[700px]"
           }`}
         >
           {m.type === "image" ? (
@@ -87,7 +88,7 @@ function Slider({ media }) {
             />
           ) : (
             <video
-              className="w-full max-h-[700px] object-contain rounded-xl"
+              className="w-full max-h-[700px]  rounded-xl"
             
               onLoadedData={handleLoad}
             >

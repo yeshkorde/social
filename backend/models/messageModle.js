@@ -23,6 +23,6 @@ const messageSchema = new mongoose.Schema({
         type:Boolean,
         default:false
     }
-},{timeseries:true})
+},{timestamps:true})
 
 export default mongoose.model("message",messageSchema)

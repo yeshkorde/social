@@ -83,33 +83,56 @@ export const createPostControlller = async (req, res) => {
 
 export const feedPostController = async (req, res) => {
   try {
-    const followingPostes = [];
-
     const currentUser = req.user;
-    const following = await currentUser.populate({
-      modle: "user",
+
+    await currentUser.populate({
       path: "following",
       populate: {
         path: "postes",
-        modle: "postes",
+        model: "postes",
+        populate: {
+          path: "userId",
+          model: "user",
+        },
       },
     });
 
-    const randomPostes = await postModle.aggregate([{ $sample: { size: 10 } }]);
-
-    randomPostes.forEach((post) => {
-      if (!followingPostes.includes(post._id.toString())) {
-        followingPostes.push(post);
-      }
+    let followingPostes = [];
+    currentUser.following.forEach((user) => {
+      followingPostes = followingPostes.concat(user.postes);
     });
 
-    const shuffledPosts = followingPostes.sort(() => 0.5 - Math.random());
 
-    const randomPostesForFeed = shuffledPosts.slice(0, 10);
-console.log(randomPostesForFeed);
+    const randomPostes = await postModle.aggregate([
+      { $sample: { size: 10 } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      { $unwind: "$user" },
+    ]);
+  
+    const uniquePostes = new Map();
+    [...followingPostes, ...randomPostes].forEach((post) => {
+      uniquePostes.set(post._id.toString(), post);
+    });
 
-    res.json({postes:randomPostesForFeed});
+
+
+    const shuffledPosts = Array.from(uniquePostes.values()).sort(
+      () => 0.5 - Math.random()
+    );
+
+   
+    const feedPosts = shuffledPosts.slice(0, 10);
+
+    res.json({ posts: feedPosts });
   } catch (error) {
-    res.json({ messsage: "internal server error ", sucess: false });
+    console.error("Error fetching feed:", error);
+    res.status(500).json({ message: "Internal server error", success: false });
   }
 };

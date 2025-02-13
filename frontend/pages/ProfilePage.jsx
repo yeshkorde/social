@@ -165,7 +165,7 @@ function ProfilePage() {
         className="h-[710px] w-full absolute bg-white/60 dark:bg-black/60 z-30 flex justify-center items-center hidden p-4"
         ref={ProfileChangeRef}
       >
-        <div className="h-52 rounded-2xl w-1/3 bg-white shadow-[3px_3px_30px] shadow-[#e6e6e6]  dark:border  dark:bg-black dark:shadow-[#000]">
+        <div className="h-52 rounded-2xl w-1/3 bg-white shadow-[3px_3px_30px] shadow-[#e6e6e6]    dark:bg-black dark:shadow-[#000]">
           <div className="px-8 py-4 h-1/2 flex flex-col justify-center gap-4 items-center">
             {isLoding ? (
               <div className="h-full w-full flex justify-center items-center pt-20">
@@ -252,10 +252,10 @@ function ProfilePage() {
         </div>
       </div>
       <div
-        className={`h-full w-full bg-white shadow-lg dark:border dark:border-[#2b2b2b]   dark:bg-[#000000]  rounded-2xl p-10 overflow-hidden relative`}
+        className={`h-full w-full bg-white shadow-lg  dark:border-[#2b2b2b]   dark:bg-[#000000]  rounded-2xl p-10 overflow-hidden relative`}
       >
         <div className="h-80 w-full box bg-[#ffffff] dark:bg-[#000]  rounded-3xl relative overflow-hidden shadow-[3px_3px_30px] shadow-[#e6e6e6] dark:shadow-[#000]">
-          <div className="h-full  bg-[#fff] w-full dark:bg-black dark:border dark:border-[#2b2b2b] absolute rounded-3xl items-center flex p-6   gap-10">
+          <div className="h-full  bg-[#fff] w-full dark:bg-black  absolute rounded-3xl items-center flex p-6   gap-10">
             <ProfileImage isProfileChange={setisProfileChangeOn} />
             <div className="p-10 h-full w-1/2 flex flex-col gap-2 ">
               <p className="ibm-plex-sans-semibold profileData text-2xl text-[#1f1f1f] dark:text-white">
