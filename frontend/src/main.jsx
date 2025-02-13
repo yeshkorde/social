@@ -13,7 +13,7 @@ import ComponentContextProvider from "../context/ComponentContext";
 import { Toaster } from "@/components/ui/toaster";
 import SocketContextProvider from "../context/SocketContext";
 import CreatePostPage from "../pages/CreatePostPage";
-
+import UserProfilePage from "../pages/UserProfilePage";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <MainLayout/>,
+    element: <MainLayout />,
     children: [
       {
         path: "",
@@ -33,8 +33,12 @@ const router = createBrowserRouter([
         element: <Protect page={<ProfilePage />} />,
       },
       {
-        path:"/create",
-        element:<Protect page={<CreatePostPage/>}/>
+        path: "/create",
+        element: <Protect page={<CreatePostPage />} />,
+      },
+      {
+        path: "profile/:userId",
+        element:<Protect page={<UserProfilePage/>}/>
       },
       {
         path: "*",
@@ -45,15 +49,14 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-
-    <ComponentContextProvider>
-      <ModeContextProvider>
-        <UserContextProvider>
+  <ComponentContextProvider>
+    <ModeContextProvider>
+      <UserContextProvider>
         <SocketContextProvider>
           <RouterProvider router={router} />
-          </SocketContextProvider>
-          <Toaster />
-        </UserContextProvider>
-      </ModeContextProvider>
-    </ComponentContextProvider>
+        </SocketContextProvider>
+        <Toaster />
+      </UserContextProvider>
+    </ModeContextProvider>
+  </ComponentContextProvider>
 );

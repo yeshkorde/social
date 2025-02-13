@@ -286,7 +286,7 @@ function CreatePost() {
                 </label>
                 <textarea
                   type="text"
-                  className=" h-10 text-[12px] dark:text-white mt-2 outline-none scrollHidden  bg-transparent border-b border-[#bababa] dark:border-[#282828] px-2 resize-none overflow-y-scroll"
+                  className=" h-80 text-[12px] dark:text-white mt-2 outline-none scrollHidden  bg-transparent border-b border-[#bababa] dark:border-[#282828] px-2 resize-none overflow-y-scroll"
                   name=""
                   value={textDta.discription}
                   id=""
