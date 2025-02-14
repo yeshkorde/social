@@ -1,8 +1,14 @@
-import React from 'react'
+import {useSearchParams} from "react-router-dom"
 
 function UserProfilePage() {
+
+
+  const [searchParams] =useSearchParams()
+
+  const id = searchParams.get("id")
+
   return (
-    <div>UserProfilePage</div>
+    <div className="text-red-400">{id}</div>
   )
 }
 

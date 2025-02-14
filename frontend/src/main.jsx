@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         element: <Protect page={<CreatePostPage />} />,
       },
       {
-        path: "profile/:userId",
+        path: "/userProfile",
         element:<Protect page={<UserProfilePage/>}/>
       },
       {

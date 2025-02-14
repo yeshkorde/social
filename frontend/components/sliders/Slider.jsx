@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-
+import PropTypes from "prop-types"
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
-
-
+import Slide from "./Slide";
 
 function Slider({ media }) {
   const [imageDimensions, setImageDimensions] = useState({
@@ -15,7 +14,8 @@ function Slider({ media }) {
     height: 0,
   });
 
-  const [activeSlide, setactiveSlide] = useState('')
+
+
 
   const handleLoad = (e) => {
     const mediaElement = e.target;
@@ -28,7 +28,6 @@ function Slider({ media }) {
     const aspectRatio = width / height;
 
     let newWidth, newHeight;
-
 
     if (height > 700) {
       newHeight = 700;
@@ -54,13 +53,9 @@ function Slider({ media }) {
   };
 
 
-  console.log(activeSlide);
-  
-
   return (
     <Swiper
       cssMode={true}
-      onSlideChange={(swiper)=>setactiveSlide(swiper.activeIndex)}
       navigation={true}
       pagination={{ clickable: true }}
       mousewheel={true}
@@ -72,34 +67,30 @@ function Slider({ media }) {
         height: imageDimensions.height ? `${imageDimensions.height}px` : "100%",
       }}
     >
-      {media?.map((m, ind) => (
-        <SwiperSlide
-          key={ind}
-          className={`flex items-center justify-center  object-cover${
-            m.type === "image" ? "" : " max-h-[700px]"
-          }`}
-        >
-          {m.type === "image" ? (
-            <img
-              src={m.url}
-              alt="Media"
-              className="w-full h-auto rounded-xl"
-              onLoad={handleLoad}
-            />
-          ) : (
-            <video
-              className="w-full max-h-[700px]  rounded-xl"
-            
-              onLoadedData={handleLoad}
-            >
-              <source src={m.url} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          )}
-        </SwiperSlide>
-      ))}
+      {media?.map((m, ind) => {
+        return (
+          <SwiperSlide
+            key={ind}
+            className={`flex items-center justify-center  object-cover${
+              m.type === "image" ? "" : " max-h-[700px]"
+            }`}
+          >
+         <Slide url={m.url} onlode={handleLoad} type={m.type} />
+          </SwiperSlide>
+        );
+      })}
     </Swiper>
   );
 }
+
+
+Slider.propTypes = {
+  media: PropTypes.arrayOf(
+    PropTypes.shape({
+      url: PropTypes.string.isRequired,
+      type: PropTypes.oneOf(["image", "video"]).isRequired,
+    })
+  ).isRequired,
+};
 
 export default Slider;

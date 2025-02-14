@@ -1,5 +1,5 @@
 import { ImageUp, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState,useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 import { motion } from "motion/react";
@@ -19,6 +19,9 @@ function CreatePost() {
   });
 
   const [videoDuration, setvideoDuration] = useState("");
+  const textareaRef = useRef(null);
+
+
 
   const handleGetImages = (e) => {
     if (images.length >= 6) {
@@ -121,7 +124,7 @@ function CreatePost() {
       setimages([]);
       settextDta({ title: "", discription: "" });
       setlinkes([]);
-      if (res.data.sucess) {
+      if (res.data.success) {
         navigate("/profile");
         toast({
           title: "post created sucessfully",
@@ -136,6 +139,15 @@ function CreatePost() {
       setisLoding(true);
     }
   };
+
+ 
+
+  useEffect(() => {
+      if (textareaRef.current) {
+          textareaRef.current.style.height = "auto"; // Reset height
+          textareaRef.current.style.height = textareaRef.current.scrollHeight + "px"; // Set to scroll height
+      }
+  }, [textDta.discription]);
 
   return (
     <div className="h-full w-full">
@@ -285,18 +297,16 @@ function CreatePost() {
                   Discription
                 </label>
                 <textarea
-                  type="text"
-                  className=" h-80 text-[12px] dark:text-white mt-2 outline-none scrollHidden  bg-transparent border-b border-[#bababa] dark:border-[#282828] px-2 resize-none overflow-y-scroll"
-                  name=""
-                  value={textDta.discription}
-                  id=""
-                  onChange={(e) =>
-                    settextDta((prev) => ({
-                      ...prev,
-                      discription: e.target.value,
-                    }))
-                  }
-                />
+            ref={textareaRef}
+            className="text-[12px] dark:text-white mt-2 outline-none scrollHidden bg-transparent border-b border-[#bababa] dark:border-[#282828] p-2 resize-none overflow-hidden"
+            value={textDta.discription}
+            onChange={(e) =>
+                settextDta((prev) => ({
+                    ...prev,
+                    discription: e.target.value,
+                }))
+            }
+        />
               </div>
               {linkes.map((link, ind) => (
                 <div className="flex gap-4 mt-4" key={ind}>

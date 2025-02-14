@@ -1,85 +1,73 @@
-import userModle from "../models/userModle.js";
 import imagekit from "../helper/imageKit.js";
-import { getIO } from "../Sockit.js";
+import cloudinary from "../helper/cloudinery.js";
 import postModle from "../models/postModle.js";
-import { populate } from "dotenv";
+import {Readable} from "stream"
+
+
+
 
 export const createPostControlller = async (req, res) => {
   try {
     const files = req.files;
     const data = req.body;
     const currentUser = req.user;
-    let promessedFiles;
 
-    if (files) {
-      promessedFiles = files.map(async (file) => {
-        let mediaData = [];
-        if (file.mimetype.startsWith("video/")) {
-          const res = await imagekit.upload({
-            file: file.buffer,
-            fileName: file.originalname,
-            folder: "/postVideos",
-          });
-          mediaData.push(res);
-        } else {
-          const res = await imagekit.upload({
-            file: file.buffer,
-            fileName: file.originalname,
-            folder: "/postImages",
-          });
-          mediaData.push(res);
-        }
-        return mediaData;
-      });
+    let uploadedFiles = [];
 
-      let responses = await Promise.all(promessedFiles);
-      const flatResponses = responses.flat(3);
+    if (files && files.length > 0) {
+      const promisedFiles = files.map((file) => {
+        return new Promise((resolve, reject) => {
+          const folder = file.mimetype.startsWith("video/") ? "postVideos" : "postImages";
 
-      let urlsAndFileId = [];
+          const uploadStream = cloudinary.uploader.upload_stream(
+            { folder, resource_type: file.mimetype.startsWith("video/") ? "video" : "image" },
+            (error, result) => {
+              if (error) return reject(error);
+              resolve(result); 
+            }
+          );
 
-      flatResponses.forEach((responce) => {
-        urlsAndFileId.push({
-          url: responce.url,
-          fileId: responce.fileId,
-          type: responce.fileType,
+          Readable.from(file.buffer).pipe(uploadStream);
         });
       });
 
-      let jsondata = JSON.parse(data.text);
-      let jsonLinkes = JSON.parse(data.linkes);
-
-      const newPost = await postModle.create({
-        caption: jsondata.title,
-        media: urlsAndFileId,
-        discription: jsondata.discription,
-        linkes: jsonLinkes,
-        userId: currentUser._id,
-      });
-
-      currentUser.postes.push(newPost);
-      currentUser.save();
-      return res.json({ message: "post created sucessfully", sucess: true });
-    } else {
-      let jsondata = JSON.parse(data.text);
-      let jsonLinkes = JSON.parse(data.linkes);
-
-      const newPost = await postModle.create({
-        caption: jsondata.title,
-        media: [],
-        discription: jsondata.discription,
-        linkes: jsonLinkes,
-        userId: currentUser._id,
-      });
-
-      currentUser.postes.push(newPost);
-      currentUser.save();
-      return res.json({ message: "post created sucessfully", sucess: true });
+      uploadedFiles = await Promise.all(promisedFiles);
     }
+
+   
+    const mediaData = uploadedFiles.map((file) => ({
+      url: file.secure_url,
+      fileId: file.public_id,
+      type: file.resource_type,
+    }));
+
+    const jsondata = JSON.parse(data.text || "{}");
+    const jsonLinkes = JSON.parse(data.linkes || "[]");
+
+
+    const newPost = await postModle.create({
+      caption: jsondata.title,
+      media: mediaData,
+      discription: jsondata.discription,
+      linkes: jsonLinkes,
+      userId: currentUser._id,
+    });
+
+
+    currentUser.postes.push(newPost);
+    await currentUser.save();
+
+    return res.json({ message: "Post created successfully", success: true, post: newPost });
   } catch (error) {
-    console.log(error);
-    return res.json({ message: "internal servar error", sucess: false });
+    console.error("Error creating post:", error);
+    return res.status(500).json({ message: "Internal server error", success: false });
   }
 };
+
+
+
+
+
 
 export const feedPostController = async (req, res) => {
   try {
@@ -102,7 +90,6 @@ export const feedPostController = async (req, res) => {
       followingPostes = followingPostes.concat(user.postes);
     });
 
-
     const randomPostes = await postModle.aggregate([
       { $sample: { size: 10 } },
       {
@@ -115,19 +102,16 @@ export const feedPostController = async (req, res) => {
       },
       { $unwind: "$user" },
     ]);
-  
+
     const uniquePostes = new Map();
     [...followingPostes, ...randomPostes].forEach((post) => {
       uniquePostes.set(post._id.toString(), post);
     });
 
-
-
     const shuffledPosts = Array.from(uniquePostes.values()).sort(
       () => 0.5 - Math.random()
     );
 
-   
     const feedPosts = shuffledPosts.slice(0, 10);
 
     res.json({ posts: feedPosts });

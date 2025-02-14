@@ -7,16 +7,23 @@ const ComponentContextProvider = ({ children }) => {
         isSearchOn: false,
         isNotificationOn: false,
       });
-const [isLogout, setisLogout] = useState(false)
+      const [isLogout, setisLogout] = useState(false)
+const [isMuted, setisMuted] = useState(true)      
+
+
 
  const value = {
    isOn,
    setisOn,
    isLogout,
    setisLogout,
+   isMuted,
+   setisMuted
  }
  
   return <ComponentContext.Provider value={value}>{children}</ComponentContext.Provider>;
 };
+
+
 
 export default ComponentContextProvider;

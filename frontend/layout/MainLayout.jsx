@@ -12,7 +12,7 @@ function MainLayout() {
   const location = useLocation()
 
 
-  const privatePaths = ["/","/profile","/create"]
+  const privatePaths = ["/","/profile","/create","/userProfile"]
 
   return (
     <div className='h-full w-full justify-center xl:justify-between sm:flex sm:justify-center lg:p-4'>
