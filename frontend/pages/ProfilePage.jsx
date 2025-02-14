@@ -46,7 +46,7 @@ function ProfilePage() {
         }
       );
 
-      if (res.data.sucess) {
+      if (res.data.success) {
         setuserData(res.data.currentuser);
         setisProfileChangeOn(false);
         toast({
@@ -62,11 +62,6 @@ function ProfilePage() {
     }
   };
 
-  useEffect(() => {
-    if (isProfileChangeOn) {
-      //  const tl = gsap.timeline();
-    }
-  }, [isProfileChangeOn]);
 
   const handleProfileImageChange = async (e) => {
     try {
@@ -93,9 +88,12 @@ function ProfilePage() {
           withCredentials: true,
         }
       );
-      if (res.data.sucess) {
+      console.log(res.data);
+      if (res.data.success) {
         setuserData(res.data.currentuser);
         setisProfileChangeOn(false);
+
+
         toast({
           title: "Profile Image Updated SucessFully",
         });

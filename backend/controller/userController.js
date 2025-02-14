@@ -3,6 +3,8 @@ import imagekit from "../helper/imageKit.js";
 import { getIO} from "../Sockit.js";
 import notificationModle from "../models/notificationModle.js";
 import {v4 as uuidv4} from "uuid"
+import cloudinary from "../helper/cloudinery.js"
+
 export const searchUsers = async (req, res) => {
   try {
     const { q } = req.query;
@@ -33,68 +35,67 @@ export const searchUsers = async (req, res) => {
 
 export const updateProfileImageController = async (req, res) => {
   try {
-    let responce;
     const currentuser = await userModle.findOne({ _id: req.user._id });
     const { q } = req.query;
 
     if (q === "update") {
       if (!req.file) {
-        return res.status(400).send("No file uploaded.");
+        return res.status(400).json({ message: "No file uploaded." });
       }
 
       if (currentuser.fileId) {
-        await imagekit.deleteFile(currentuser.fileId);
-        responce = await imagekit.upload({
-          file: req.file.buffer,
-          folder: "profileImages",
-          fileName: "ProfileImage.png",
-          isPrivateFile: false,
-        });
-        currentuser.fileId = responce.fileId;
-        currentuser.profileImage = responce.url;
-        currentuser.save();
-      } else {
-        responce = await imagekit.upload({
-          file: req.file.buffer,
-          folder: "profileImages",
-          fileName: "ProfileImage.png",
-          isPrivateFile: false,
-        });
-        currentuser.fileId = responce.fileId;
-        currentuser.profileImage = responce.url;
-        currentuser.save();
+        await cloudinary.uploader.destroy(currentuser.fileId);
       }
-      return res.json({
-        message: "File uploaded successfully",
-        currentuser,
-        sucess: true,
-      });
+
+
+      cloudinary.uploader.upload_stream(
+        { folder: "profileImages" },
+        async (error, result) => {
+          if (error) {
+            return res.status(500).json({ message: "Upload failed", error });
+          }
+
+        
+          currentuser.fileId = result.public_id;
+          currentuser.profileImage = result.secure_url;
+          await currentuser.save();
+
+          return res.json({
+            message: "File uploaded successfully",
+            currentuser,
+            success: true,
+          });
+        }
+      ).end(req.file.buffer);
     }
 
     if (q === "remove") {
+      console.log("Removing profile image...");
+
       if (currentuser.fileId) {
-        await imagekit.deleteFile(currentuser.fileId);
+        await cloudinary.uploader.destroy(currentuser.fileId);
+        currentuser.fileId = "";
       }
+
 
       currentuser.profileImage =
         "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png";
-      currentuser.fileId = "";
-      currentuser.save();
+
+      await currentuser.save();
+
+      
+      return res.status(200).json({
+        message: "Profile image removed successfully",
+        currentuser,
+        success: true,
+      });
     }
-    return res.json({
-      message: "File uploaded successfully",
-      currentuser,
-      sucess: true,
-    });
+
   } catch (error) {
-    console.log(
-      "some thing want wrong to update profile image ",
-      error.message
-    );
+    console.error("Error updating profile image: ", error.message);
+    return res.status(500).json({ message: "Something went wrong", error });
   }
 };
-
-
 
 
 
