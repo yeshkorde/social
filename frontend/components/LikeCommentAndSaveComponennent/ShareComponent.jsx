@@ -1,20 +1,60 @@
-import React from 'react'
+import {useRef} from 'react'
+import gsap from 'gsap'
 
 function ShareComponent() {
+
+  const circleRef = useRef();
+  const arrowRef = useRef()
+
+
+  const handleMouseOver = (e) =>{
+    gsap.to(e.target,{
+   boxShadow:"2px 2px 40px #00ffa9",
+    duration:0.2,
+    })
+    gsap.to(circleRef.current,{
+      stroke:"#00ffa9"
+    })
+    gsap.to(arrowRef.current,{
+      stroke:"#00ffa9"
+    })
+    }
+    
+    const handleMouseLeave = (e)=>{
+      gsap.to(e.target,{
+        boxShadow:"none",
+      })
+      gsap.to(circleRef.current,{
+        stroke:"#697986"
+      })
+      gsap.to(arrowRef.current,{
+        stroke:"#697986"
+      })
+    }
+    
+
+
+
+
+
   return (
+    <div
+    className="flex justify-center items-center p-2 rounded-full cursor-pointer bg-transparent "
+    onMouseEnter={(e)=>handleMouseOver(e)}
+    onMouseLeave={(e)=>handleMouseLeave(e)} 
+  >
     <svg
     aria-label="Share"
-    className="x1lliihq x1n2onr6 xyb1xck"
-    fill="currentColor"
-    height="24"
+    className="dark:fill-[#697986] fill-[#4c555d]"
+    height="20"
     role="img"
     viewBox="0 0 24 24"
-    width="24"
+    width="20"
   >
     <title>Share</title>
     <line
-      fill="none"
-      stroke="currentColor"
+ ref={circleRef}
+    className='dark:stroke-[#697986] stroke-[#4c555d]'
       strokeLinejoin="round"
       strokeWidth="2"
       x1="22"
@@ -24,12 +64,14 @@ function ShareComponent() {
     ></line>
     <polygon
       fill="none"
+      ref={arrowRef}
       points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334"
-      stroke="currentColor"
+     className='dark:stroke-[#697986] stroke-[#4c555d]'
       strokeLinejoin="round"
       strokeWidth="2"
     ></polygon>
   </svg>
+  </div>
   )
 }
 
