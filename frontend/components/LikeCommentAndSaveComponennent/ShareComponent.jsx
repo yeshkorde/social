@@ -8,10 +8,10 @@ function ShareComponent() {
 
 
   const handleMouseOver = (e) =>{
-    gsap.to(e.target,{
-   boxShadow:"2px 2px 40px #00ffa9",
-    duration:0.2,
-    })
+   
+    
+
+
     gsap.to(circleRef.current,{
       stroke:"#00ffa9"
     })
@@ -21,9 +21,7 @@ function ShareComponent() {
     }
     
     const handleMouseLeave = (e)=>{
-      gsap.to(e.target,{
-        boxShadow:"none",
-      })
+   
       gsap.to(circleRef.current,{
         stroke:"#697986"
       })
@@ -39,7 +37,7 @@ function ShareComponent() {
 
   return (
     <div
-    className="flex justify-center items-center p-2 rounded-full cursor-pointer bg-transparent "
+    className="flex justify-center items-center p-2 rounded-full groupe cursor-pointer bg-transparent "
     onMouseEnter={(e)=>handleMouseOver(e)}
     onMouseLeave={(e)=>handleMouseLeave(e)} 
   >
@@ -54,7 +52,7 @@ function ShareComponent() {
     <title>Share</title>
     <line
  ref={circleRef}
-    className='dark:stroke-[#697986] stroke-[#4c555d]'
+    className='dark:stroke-[#697986] stroke-[#4c555d] group-hover:stroke-black'
       strokeLinejoin="round"
       strokeWidth="2"
       x1="22"
@@ -66,7 +64,7 @@ function ShareComponent() {
       fill="none"
       ref={arrowRef}
       points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334"
-     className='dark:stroke-[#697986] stroke-[#4c555d]'
+     className='dark:stroke-[#697986] stroke-[#4c555d] shadow-md shadow-black'
       strokeLinejoin="round"
       strokeWidth="2"
     ></polygon>

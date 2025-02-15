@@ -6,10 +6,7 @@ function SaveComponent() {
 
   const handleMouseOver = (e) =>{
 
-    gsap.to(e.target,{
-      boxShadow:"2px 2px 40px #fff200",
-       duration:0.2,
-       })
+  
    
     gsap.to(circleRef.current,{
       stroke:"#fff200"
@@ -21,10 +18,7 @@ function SaveComponent() {
       gsap.to(circleRef.current,{
         stroke:"#697986"
       })
-      gsap.to(e.target,{
-        boxShadow:"none",
-         duration:0.2,
-         })
+     
     }
 
 

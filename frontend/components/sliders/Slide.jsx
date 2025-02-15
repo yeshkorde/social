@@ -65,7 +65,6 @@ function Slide({url,type,onlode}) {
 
 
   Slide.propTypes = {
-    index: PropTypes.number.isRequired,
     url: PropTypes.string.isRequired,
     type: PropTypes.oneOf(["image", "video"]).isRequired,
     onlode: PropTypes.func.isRequired,

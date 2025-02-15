@@ -4,10 +4,7 @@ function CommentComponent() {
   const circleRef = useRef();
 
   const handleMouseOver = (e) =>{
-    gsap.to(e.target,{
-      boxShadow:"2px 2px 40px #009dff",
-       duration:0.2,
-       })
+  
     gsap.to(circleRef.current,{
       stroke:"#009dff"
     })
@@ -18,10 +15,7 @@ function CommentComponent() {
       gsap.to(circleRef.current,{
         stroke:"#697986"
       })
-      gsap.to(e.target,{
-        boxShadow:"none",
-         duration:0.2,
-         })
+      
     }
     
 

@@ -2,7 +2,7 @@ import Slider from "./sliders/Slider";
 import getDatesAndTime from "../utils/GetDate";
 import propTypes from "prop-types";
 import { useState } from "react";
-import LikeConponent from "./LikeCommentAndSaveComponennent/LikeConponent";
+import LikeComponent from "./LikeCommentAndSaveComponennent/LikeComponent";
 import CommentComponent from "./LikeCommentAndSaveComponennent/CommentComponent";
 import ShareComponent from "./LikeCommentAndSaveComponennent/ShareComponent";
 import SaveComponent from "./LikeCommentAndSaveComponennent/SaveComponent";
@@ -10,11 +10,9 @@ import useUserContext from "../hooks/UserContextHook";
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 
-
 function PostComponent({ post }) {
   const [isReadMore, setisReadMore] = useState(false);
   const { userData } = useUserContext();
-
 
   return (
     <motion.div
@@ -29,7 +27,7 @@ function PostComponent({ post }) {
       transition={{
         duration: 0.5,
         ease: "easeInOut",
-        delay:0.1,
+        delay: 0.1,
       }}
       className="h-full w-full flex flex-col justify-center items-center gap-6 px-40 py-4  "
     >
@@ -63,21 +61,19 @@ function PostComponent({ post }) {
           {getDatesAndTime(post.createdAt)}
         </p>
       </div>
-      <Slider media={post.media}  />
+      <Slider media={post.media} />
       <div className="flex justify-between items-center w-full px-20">
         <div className="flex flex-col gap-2 justify-start items-start w-full">
           <div className="flex justify-between items-center gap-6 w-full">
             <div className="flex gap-4">
-              <LikeConponent />
+              <LikeComponent likes={post.likes.length}/>
               <CommentComponent />
               <ShareComponent />
             </div>
             <SaveComponent />
           </div>
           <div>
-            <p className="ibm-plex-sans-semibold text-[12px]">
-              Likes {post.likes.length}
-            </p>
+            
             <p className="text-[16px] ibm-plex-sans-semibold ">
               <span className="text-[14px]">{post.user.userName} </span>
               {post.caption}
@@ -100,9 +96,17 @@ function PostComponent({ post }) {
                 </span>
               )}
             </p>
-            <p className=" dark:text-[#c4c4c4a1] text-[#171717a1]  ibm-plex-sans-semibold text-[12px] mt-2">
-              View All {post.comments.length} Comments
-            </p>
+         
+          </div>
+          <div className="flex w-full items-center gap-5 justify-center">
+            <input
+              type="text"
+              placeholder="Add Comment"
+              name=""
+              id=""
+              className="bg-transparent ibm-plex-sans-semibold text-[12px] py-2 outline-none border-b px-2 w-full dark:text-[#c4c4c4a1] text-[#171717a1]"
+            />
+            <button>Post</button>
           </div>
         </div>
       </div>
@@ -115,20 +119,19 @@ import PropTypes from "prop-types";
 
 PostComponent.propTypes = {
   post: PropTypes.shape({
-    comments: PropTypes.arrayOf(PropTypes.object), 
-    media: PropTypes.arrayOf(PropTypes.object), 
+    comments: PropTypes.arrayOf(PropTypes.object),
+    media: PropTypes.arrayOf(PropTypes.object),
     caption: PropTypes.string,
-    likes:propTypes.arrayOf(PropTypes.object), 
+    likes: propTypes.arrayOf(PropTypes.object),
     user: PropTypes.shape({
       userName: PropTypes.string,
       profileImage: PropTypes.string,
       _id: PropTypes.string,
-      followers: PropTypes.arrayOf(propTypes.object)
+      followers: PropTypes.arrayOf(propTypes.object),
     }),
     createdAt: PropTypes.string,
-    discription: PropTypes.string, 
+    discription: PropTypes.string,
   }).isRequired,
 };
-
 
 export default PostComponent;
