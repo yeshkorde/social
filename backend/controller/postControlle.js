@@ -1,10 +1,7 @@
 import imagekit from "../helper/imageKit.js";
 import cloudinary from "../helper/cloudinery.js";
 import postModle from "../models/postModle.js";
-import {Readable} from "stream"
-
-
-
+import { Readable } from "stream";
 
 export const createPostControlller = async (req, res) => {
   try {
@@ -17,13 +14,20 @@ export const createPostControlller = async (req, res) => {
     if (files && files.length > 0) {
       const promisedFiles = files.map((file) => {
         return new Promise((resolve, reject) => {
-          const folder = file.mimetype.startsWith("video/") ? "postVideos" : "postImages";
+          const folder = file.mimetype.startsWith("video/")
+            ? "postVideos"
+            : "postImages";
 
           const uploadStream = cloudinary.uploader.upload_stream(
-            { folder, resource_type: file.mimetype.startsWith("video/") ? "video" : "image" },
+            {
+              folder,
+              resource_type: file.mimetype.startsWith("video/")
+                ? "video"
+                : "image",
+            },
             (error, result) => {
               if (error) return reject(error);
-              resolve(result); 
+              resolve(result);
             }
           );
 
@@ -34,7 +38,6 @@ export const createPostControlller = async (req, res) => {
       uploadedFiles = await Promise.all(promisedFiles);
     }
 
-   
     const mediaData = uploadedFiles.map((file) => ({
       url: file.secure_url,
       fileId: file.public_id,
@@ -44,7 +47,6 @@ export const createPostControlller = async (req, res) => {
     const jsondata = JSON.parse(data.text || "{}");
     const jsonLinkes = JSON.parse(data.linkes || "[]");
 
-
     const newPost = await postModle.create({
       caption: jsondata.title,
       media: mediaData,
@@ -53,21 +55,21 @@ export const createPostControlller = async (req, res) => {
       userId: currentUser._id,
     });
 
-
     currentUser.postes.push(newPost);
     await currentUser.save();
 
-    return res.json({ message: "Post created successfully", success: true, post: newPost });
+    return res.json({
+      message: "Post created successfully",
+      success: true,
+      post: newPost,
+    });
   } catch (error) {
     console.error("Error creating post:", error);
-    return res.status(500).json({ message: "Internal server error", success: false });
+    return res
+      .status(500)
+      .json({ message: "Internal server error", success: false });
   }
 };
-
-
-
-
-
 
 export const feedPostController = async (req, res) => {
   try {
@@ -118,5 +120,40 @@ export const feedPostController = async (req, res) => {
   } catch (error) {
     console.error("Error fetching feed:", error);
     res.status(500).json({ message: "Internal server error", success: false });
+  }
+};
+
+export const likePostControler = async (req, res) => {
+  try {
+    const { postId } = req.body;
+
+    const post = await postModle.findOne({_id:postId});
+
+    if(!post){
+      return res.json({
+        error:"some thing want wrong",
+        sucess:false
+      })
+    }
+
+    if(post.likes.includes(req.user._id)){
+      post.likes.splice(post.likes.indexOf(req.user._id),1);
+      post.save();
+      return res.json({
+        message:"unliked post"
+      })
+    }
+
+    post.likes.push(req.user._id)
+    post.save();
+    
+    return res.json({
+      message:"post liked"
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.json({
+      message: "internal server error",
+    });
   }
 };

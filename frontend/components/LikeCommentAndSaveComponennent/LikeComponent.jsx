@@ -1,13 +1,17 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { motion } from "framer-motion";
-
-function LikeComponent({ likes }) {
-  const [like, setLike] = useState(likes);
+import axios from "axios"
+import useUserContext from "../../hooks/UserContextHook";
+import { useToast } from "@/hooks/use-toast";
+function LikeComponent({ likes,postId }) {
+  const [like, setLike] = useState(likes.length);
   const [isLiked, setIsLiked] = useState(false);
-  const likeRef = useRef(null); // Ref for animation
+  const likeRef = useRef(null);
+  const {userData} = useUserContext()
+  const { toast } = useToast();
 
-  const handleLike = () => {
+  const handleLike = async() => {
     if (likeRef.current) {
       gsap.fromTo(
         likeRef.current,
@@ -17,7 +21,38 @@ function LikeComponent({ likes }) {
     }
     setLike((prev) => (isLiked ? prev - 1 : prev + 1));
     setIsLiked((prev) => !prev);
+   
+   setTimeout(async() => {
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/api/post/likePost`,{
+        postId
+      },{
+        withCredentials:true
+      })
+      if(res.data.error){
+        toast({
+          title:"internal server error"
+        })
+      }
+    } catch (error) {
+      if(error){
+        toast({
+          title:"internal server error"
+        })
+      }
+    }
+   },2000);
   };
+
+
+  useEffect(()=>{
+if(likes.includes(userData._id)){
+    setIsLiked(true)
+}else{
+  console.log("un liked post");
+  setIsLiked(false)
+}
+  },[])
 
   return (
     <div className="flex justify-center items-center gap-2 p-2 rounded-full cursor-pointer group">

@@ -139,7 +139,7 @@ setisNoteficationNoSeen(unseenNotifications.length)
     <div className="h-full w-1/3 relative p-10 hidden sm:hidden md:hidden lg:block ">
       <div className="fixed top-0 left-0 h-full w-1/3 p-2 ">
         <div className="h-full w-full relative  rounded-3xl flex justify-start items-center ">
-          <div className="h-full w-full notificationBlock absolute dark:bg-[#000000] dark:border dark:border-[#2b2b2b] dark:shadow-xl dark:shadow-[#0000009c] bg-[#ffffff] leftside rounded-3xl shadow-neumorphic overflow-y-auto scrollHidden ">
+          <div className="h-full w-full notificationBlock absolute dark:bg-[#000000] dark:border dark:border-[#2b2b2b] dark:shadow-xl  bg-[#ffffff] leftside rounded-3xl shadow-[3px_3px_30px] shadow-[#e6e6e6]    dark:bg-black dark:shadow-[#000] overflow-y-auto scrollHidden ">
             <NotificationSection />
           </div>
           <div className="h-full w-full  absolute bg-[#ffffff] dark:shadow-xl dark:border dark:border-[#2b2b2b] dark:bg-[#000000] dark:shadow-[#0000009c] leftside rounded-3xl searchBlock overflow-hidden shadow-neumorphic">

@@ -11,6 +11,7 @@ import {Server} from "socket.io"
 import http from "http"
 import  {initializeSocket} from "./Sockit.js"
 import postRouter from "./routes/postRouter.js"
+import commentRouter from "./routes/commentsRoute.js"
 
 const app = express();
 dotenv.config();
@@ -46,9 +47,9 @@ app.use(passport.session());
 initializeSocket(server)
 
 app.use("/api/auth", authRouter);
-app.use("/api/user",userRouter)
-app.use("/api/post",postRouter)
-
+app.use("/api/user",userRouter);
+app.use("/api/post",postRouter);
+app.use("/api/comments",commentRouter);
 
 server.listen(process.env.PORT, () => {
   console.log(`server is runing on port ${process.env.PORT} `);

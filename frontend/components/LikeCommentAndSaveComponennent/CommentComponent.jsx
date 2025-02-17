@@ -3,14 +3,14 @@ import gsap from 'gsap';
 function CommentComponent() {
   const circleRef = useRef();
 
-  const handleMouseOver = (e) =>{
+  const handleMouseOver = () =>{
   
     gsap.to(circleRef.current,{
       stroke:"#009dff"
     })
     }
     
-    const handleMouseLeave = (e)=>{
+    const handleMouseLeave = ()=>{
      
       gsap.to(circleRef.current,{
         stroke:"#697986"
@@ -23,8 +23,8 @@ function CommentComponent() {
   return (
     <div
     className="flex justify-center items-center p-2 rounded-full  cursor-pointer"
-    onMouseEnter={(e)=>handleMouseOver(e)}
-    onMouseLeave={(e)=>handleMouseLeave(e)} 
+    onMouseEnter={handleMouseOver}
+    onMouseLeave={handleMouseLeave} 
   >
     <svg
     aria-label="Comment"
