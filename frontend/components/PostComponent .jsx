@@ -1,7 +1,7 @@
 import Slider from "./sliders/Slider";
 import getDatesAndTime from "../utils/GetDate";
 import propTypes from "prop-types";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import LikeComponent from "./LikeCommentAndSaveComponennent/LikeComponent";
 import CommentComponent from "./LikeCommentAndSaveComponennent/CommentComponent";
 import ShareComponent from "./LikeCommentAndSaveComponennent/ShareComponent";
@@ -12,13 +12,14 @@ import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import axios from "axios";
+import UserHoverCard from "./UserHoverCard";
 
 function PostComponent({ post }) {
   const { toast } = useToast();
   const [isReadMore, setisReadMore] = useState(false);
   const { userData } = useUserContext();
   const [isLoding, setisLoding] = useState(false);
-
+  const triggerRef = useRef();
   const [comment, setcomment] = useState("");
 
   const handleCreateComment = async () => {
@@ -39,6 +40,11 @@ function PostComponent({ post }) {
         toast({
           title: "commended sucessfully",
         });
+
+        if(res.data.comments){
+          post.comments = res.data.comments
+        }
+
         if (res.data.error) {
           toast({
             title: res.data.error,
@@ -82,13 +88,17 @@ function PostComponent({ post }) {
                 : `userProfile?id=${post.user._id}`
             }
           >
-            <div className="h-14 w-14 rounded-full">
-              <img
-                src={post.user.profileImage}
-                alt=""
-                className="h-full w-full rounded-full object-cover object-top"
-              />
-            </div>
+          <UserHoverCard
+          trigger={  <div ref={triggerRef} className="h-16 w-16 dark:border-[#2b2b2b] shadow-[1px_1px_30px] shadow-[#dddddd]  dark:bg-black dark:border dark:shadow-[#000] rounded-full p-1">
+          <img
+            src={post.user.profileImage}
+            alt=""
+            className="h-full w-full rounded-full object-cover object-top"
+          />
+          
+        </div>}
+        userId={post.user._id}
+          />
           </Link>
           <div className="flex flex-col ml-6">
             <p className="text-[12px] ibm-plex-sans-semibold">
@@ -109,7 +119,7 @@ function PostComponent({ post }) {
           <div className="flex justify-between items-center gap-6 w-full">
             <div className="flex gap-4">
               <LikeComponent likes={post.likes} postId={post._id} />
-              <CommentComponent />
+              <CommentComponent comments={post.comments} />
               <ShareComponent />
             </div>
             <SaveComponent />
@@ -214,7 +224,8 @@ function PostComponent({ post }) {
 
 PostComponent.propTypes = {
   post: PropTypes.shape({
-    comments: PropTypes.arrayOf(PropTypes.object),
+    _id:propTypes.string,
+    comments: PropTypes.arrayOf(propTypes.string),
     media: PropTypes.arrayOf(PropTypes.object),
     caption: PropTypes.string,
     likes: PropTypes.arrayOf(PropTypes.string),

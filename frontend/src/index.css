@@ -16,6 +16,13 @@
   font-style: normal;
 }
 
+.bShadow {
+  box-shadow: 0 0 80px #b5b5b5;
+}
+
+.iconShadow{
+  box-shadow: 0 0 100px #000000;
+}
 
 .scrollHidden::-webkit-scrollbar{
   background-color: transparent;

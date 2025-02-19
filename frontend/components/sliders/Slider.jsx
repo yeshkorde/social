@@ -71,7 +71,7 @@ function Slider({ media }) {
         return (
           <SwiperSlide
             key={ind}
-            className={`flex items-center justify-center  object-cover${
+            className={`flex items-center justify-center  object-cover cursor-pointer${
               m.type === "image" ? "" : " max-h-[700px]"
             }`}
           >

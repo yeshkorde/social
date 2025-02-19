@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema(
     reels: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: "reel",
+        ref: "reels",
       },
     ],
     chates: [

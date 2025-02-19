@@ -15,7 +15,7 @@ const config = {
   theme: {
   	extend: {
   		boxShadow: {
-  			neumorphic: '8px 8px 40px rgba(0, 0, 0, 0.2), -8px -8px 40px rgba(255, 255, 255, 0.2)',
+  			neumorphic: '8px 8px 15px rgba(0, 0, 0, 0.1), -8px -8px 15px rgba(255, 255, 255, 0.2)',
   			'neumorphic-inset': 'inset 6px 6px 40px rgba(0, 0, 0, 0.1), inset -6px -6px 40px rgba(255, 255, 255, 0.7)',
   			darkneumorphic: '8px 8px 15px rgba(0, 0, 0, 0.3), -8px -8px 15px rgba(0, 0, 0, 0.1)',
   			'neumorphic2-inset': 'inset 6px 6px 10px rgba(0, 0, 0, 0.3), inset -6px -6px 10px rgba(255, 255, 255, 0.1)'

@@ -9,7 +9,7 @@ function SaveComponent() {
   
    
     gsap.to(circleRef.current,{
-      stroke:"#fff200"
+      stroke:"#009dff"
     })
     }
     

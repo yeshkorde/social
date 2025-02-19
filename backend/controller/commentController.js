@@ -20,7 +20,8 @@ export const createCommentController = async (req, res) => {
       postId,
     });
     post.comments.push(newComment._id);
-    return res.json({ message: "comment created",sucess:true});
+    post.save();
+    return res.json({ message: "comment created",sucess:true,comments:post.comments});
   } catch (error) {
     console.log(`some thing wantwrong to create comment`, error.message);
     res.json({

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { motion } from "framer-motion";
+import PropTypes from "prop-types";
 import axios from "axios"
 import useUserContext from "../../hooks/UserContextHook";
 import { useToast } from "@/hooks/use-toast";
@@ -49,7 +50,6 @@ function LikeComponent({ likes,postId }) {
 if(likes.includes(userData._id)){
     setIsLiked(true)
 }else{
-  console.log("un liked post");
   setIsLiked(false)
 }
   },[])
@@ -92,4 +92,12 @@ if(likes.includes(userData._id)){
   );
 }
 
+
+LikeComponent.propTypes = {
+  likes:PropTypes.arrayOf(PropTypes.string),
+  postId:PropTypes.string,
+
+}
+
 export default LikeComponent;
+

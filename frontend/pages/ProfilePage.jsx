@@ -23,7 +23,10 @@ function ProfilePage() {
   const { toast } = useToast();
   const { setuserData } = useUserContext();
   const moveRef = useRef();
-  const [activeSection, setactiveSection] = useState(<PostsSection />);
+  const [activeSection, setactiveSection] = useState(<PostsSection postes={userData.postes}/>);
+
+console.log(userData);
+
 
   useEffect(() => {
     if (isProfileChangeOn) {
@@ -112,7 +115,7 @@ function ProfilePage() {
   const moveToPosts = () => {
     if (activeSection === <PostsSection />) return;
 
-    setactiveSection(<PostsSection />);
+    setactiveSection(<PostsSection postes={userData.postes}/>);
 
     gsap.to(moveRef.current, {
       x: 130,

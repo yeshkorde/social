@@ -41,4 +41,4 @@ const reelSchema = new mongoose.Schema({
       ],
 },{timeseries:true})
 
-export default mongoose.model("reel",reelSchema);
+export default mongoose.model("reels",reelSchema);

@@ -64,6 +64,9 @@ const token = req.cookies;
         path:"sender",
         module:"userModle"
       }
+    }).populate({
+    path:"postes",
+    modle:"post"
     })
      
 

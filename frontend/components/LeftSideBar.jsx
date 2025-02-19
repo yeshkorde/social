@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import gsap from "gsap";
 
@@ -9,17 +8,14 @@ import useComponentContext from "../hooks/ComponentContextHook";
 import SearchUser from "./SearchUser";
 import axios from "axios";
 import NotificationSection from "./NotificationSection";
-
+import { motion } from "motion/react";
 function LeftSideBar() {
   const { isOn, setisOn } = useComponentContext();
-  const { userData,Notifications} = useUserContext();
+  const { userData, Notifications } = useUserContext();
   const { mode, toggleMode } = useModecontext();
   const { setisLogout } = useComponentContext();
   const [isLoding, setisLoding] = useState(false);
-  const [isNoteficationNoSeen, setisNoteficationNoSeen] = useState(6)
-
-
-
+  const [isNoteficationNoSeen, setisNoteficationNoSeen] = useState(6);
 
   useEffect(() => {
     if (isOn.isNotificationOn) {
@@ -97,7 +93,7 @@ function LeftSideBar() {
 
   const handleLogOut = async () => {
     try {
-      setisLoding(true)
+      setisLoding(true);
       const res = await axios.get(
         `${import.meta.env.VITE_SERVER_BASE_URL}/api/auth/logout`,
         {
@@ -108,38 +104,32 @@ function LeftSideBar() {
       if (res.data.status) {
         return setisLogout(true);
       }
-      setisLoding(false)
+      setisLoding(false);
     } catch (error) {
       console.log("some thing want wrong to logout ", error.message);
     }
   };
 
-  
   const hnadleLode = (e) => {
     if (e.target.naturalHeight > 1350) {
       e.target.classList.add("object-top");
-    } else if(e.target.naturalHeight < 1000){
+    } else if (e.target.naturalHeight < 1000) {
       e.target.classList.add("object-top");
-    }else{
+    } else {
       e.target.classList.add("object-top");
     }
   };
 
- 
-
-useEffect(()=>{
-const unseenNotifications = Notifications.filter((not)=>!not.isSeen)
-setisNoteficationNoSeen(unseenNotifications.length)
-},[Notifications])
-  
-
-  
+  useEffect(() => {
+    const unseenNotifications = Notifications.filter((not) => !not.isSeen);
+    setisNoteficationNoSeen(unseenNotifications.length);
+  }, [Notifications]);
 
   return (
     <div className="h-full w-1/3 relative p-10 hidden sm:hidden md:hidden lg:block ">
       <div className="fixed top-0 left-0 h-full w-1/3 p-2 ">
         <div className="h-full w-full relative  rounded-3xl flex justify-start items-center ">
-          <div className="h-full w-full notificationBlock absolute dark:bg-[#000000] dark:border dark:border-[#2b2b2b] dark:shadow-xl  bg-[#ffffff] leftside rounded-3xl shadow-[3px_3px_30px] shadow-[#e6e6e6]    dark:bg-black dark:shadow-[#000] overflow-y-auto scrollHidden ">
+          <div className="h-full w-full notificationBlock absolute  dark:border dark:border-[#2b2b2b] dark:shadow-xl  bg-[#ffffff] leftside rounded-3xl shadow-[3px_3px_30px] shadow-[#e6e6e6]    dark:bg-black dark:shadow-[#000] overflow-y-auto scrollHidden ">
             <NotificationSection />
           </div>
           <div className="h-full w-full  absolute bg-[#ffffff] dark:shadow-xl dark:border dark:border-[#2b2b2b] dark:bg-[#000000] dark:shadow-[#0000009c] leftside rounded-3xl searchBlock overflow-hidden shadow-neumorphic">
@@ -147,7 +137,11 @@ setisNoteficationNoSeen(unseenNotifications.length)
           </div>
           <div className="h-[98%] m-2 w-[90px] dark:border dark:border-[#2b2b2b]  dark:bg-[#000000]  absolute  mainsideBar  bg-white rounded-3xl flex p-4  flex-col overflow-hidden gap-5 shadow-2xl">
             <Link to={"/"}>
-              <div className="w-full h-14  dark:bg-[#000000] flex item justify-center cursor-pointer  dark:border dark:border-[#2b2b2b]  dark:shadow-darkneumorphic items-center rounded-full bg-white shadow-neumorphic  overflow-hidden hover:shadow-lg ">
+              <motion.div
+              whileTap={{
+                scale:0.3
+              }}
+               className="w-full h-14  dark:bg-[#000000] flex item justify-center cursor-pointer  dark:border dark:border-[#2b2b2b]  dark:shadow-darkneumorphic items-center rounded-full bg-white shadow-neumorphic  overflow-hidden hover:shadow-lg ">
                 <svg
                   aria-label="Home"
                   className="x1lliihq x1n2onr6 x5n08af dark:fill-white"
@@ -160,9 +154,12 @@ setisNoteficationNoSeen(unseenNotifications.length)
                   <title>Home</title>
                   <path d="M22 23h-6.001a1 1 0 0 1-1-1v-5.455a2.997 2.997 0 1 0-5.993 0V22a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V11.543a1.002 1.002 0 0 1 .31-.724l10-9.543a1.001 1.001 0 0 1 1.38 0l10 9.543a1.002 1.002 0 0 1 .31.724V22a1 1 0 0 1-1 1Z"></path>
                 </svg>
-              </div>
+              </motion.div>
             </Link>
-            <div
+            <motion.div
+              whileTap={{
+                scale:0.3
+              }}
               className="w-full h-14 flex justify-center dark:bg-[#000000] dark:border dark:border-[#2b2b2b] items-center dark:shadow-darkneumorphic cursor-pointer searchBox item bg-white rounded-full shadow-neumorphic hover:shadow-lg "
               onClick={() => setisOn({ isSearchOn: !isOn.isSearchOn })}
             >
@@ -198,9 +195,12 @@ setisNoteficationNoSeen(unseenNotifications.length)
                   y2="22"
                 ></line>
               </svg>
-            </div>
+            </motion.div>
 
-            <div className="w-full h-14 flex dark:bg-[#000000] dark:border dark:border-[#2b2b2b] justify-center dark:shadow-darkneumorphic item items-center bg-[#fff] cursor-pointer  rounded-full shadow-neumorphic hover:shadow-lg ">
+            <motion.div
+              whileTap={{
+                scale:0.3
+              }} className="w-full h-14 flex dark:bg-[#000000] dark:border dark:border-[#2b2b2b] justify-center dark:shadow-darkneumorphic item items-center bg-[#fff] cursor-pointer  rounded-full shadow-neumorphic hover:shadow-lg ">
               <svg
                 aria-label="Reels"
                 className="x1lliihq x1n2onr6 x5n08af dark:fill-white"
@@ -260,8 +260,11 @@ setisNoteficationNoSeen(unseenNotifications.length)
                   fillRule="evenodd"
                 ></path>
               </svg>
-            </div>
-            <div className="w-full h-14 dark:shadow-darkneumorphic dark:border dark:border-[#2b2b2b] dark:bg-[#000000] flex justify-center item items-center bg-[#fff] cursor-pointer rounded-full shadow-neumorphic hover:shadow-lg ">
+            </motion.div>
+            <motion.div
+              whileTap={{
+                scale:0.3
+              }} className="w-full h-14 dark:shadow-darkneumorphic dark:border dark:border-[#2b2b2b] dark:bg-[#000000] flex justify-center item items-center bg-[#fff] cursor-pointer rounded-full shadow-neumorphic hover:shadow-lg ">
               <svg
                 aria-label="Messenger"
                 className="x1lliihq x1n2onr6 x5n08af dark:fill-white"
@@ -285,8 +288,11 @@ setisNoteficationNoSeen(unseenNotifications.length)
                   fillRule="evenodd"
                 ></path>
               </svg>
-            </div>
-            <div
+            </motion.div>
+            <motion.div
+              whileTap={{
+                scale:0.3
+              }}
               className="w-full dark:shadow-darkneumorphic dark:border dark:border-[#2b2b2b] h-14 dark:bg-[#000000] flex justify-center item items-center notificationBox cursor-pointer bg-[#fff]  rounded-full shadow-neumorphic hover:shadow-lg  relative"
               onClick={() =>
                 setisOn({ isNotificationOn: !isOn.isNotificationOn })
@@ -304,73 +310,86 @@ setisNoteficationNoSeen(unseenNotifications.length)
                 <title>Notifications</title>
                 <path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z"></path>
               </svg>
-            {
-          isNoteficationNoSeen>0?<div className="h-6 w-6 rounded-full bg-red-600 right-[-3px] top-[-10px] absolute flex justify-center items-center">
-              <p className="text-white ibm-plex-sans-semibold ">{isNoteficationNoSeen}</p>
-            </div>:""
-            }
-            </div>
-           <Link to={"/create"}>
-           <div className="w-full h-14 dark:shadow-darkneumorphic dark:border dark:border-[#2b2b2b] dark:bg-[#000000] flex justify-center item cursor-pointer items-center bg-[#fff]  rounded-full shadow-neumorphic hover:shadow-lg">
-              <svg
-                aria-label="New post"
-                className="x1lliihq x1n2onr6 x5n08af dark:fill-white"
-                fill="currentColor"
-                height="20"
-                role="img"
-                viewBox="0 0 24 24"
-                width="20"
-              >
-                <title>New post</title>
-                <path
-                  d="M2 12v3.45c0 2.849.698 4.005 1.606 4.944.94.909 2.098 1.608 4.946 1.608h6.896c2.848 0 4.006-.7 4.946-1.608C21.302 19.455 22 18.3 22 15.45V8.552c0-2.849-.698-4.006-1.606-4.945C19.454 2.7 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.547 2 5.703 2 8.552Z"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className="dark:stroke-white"
-                ></path>
-                <line
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className="dark:stroke-white"
-                  x1="6.545"
-                  x2="17.455"
-                  y1="12.001"
-                  y2="12.001"
-                ></line>
-                <line
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className="dark:stroke-white"
-                  x1="12.003"
-                  x2="12.003"
-                  y1="6.545"
-                  y2="17.455"
-                ></line>
-              </svg>
-            </div>
-           </Link>
+              {isNoteficationNoSeen > 0 ? (
+                <div className="h-6 w-6 rounded-full bg-red-600 right-[-3px] top-[-10px] absolute flex justify-center items-center">
+                  <p className="text-white ibm-plex-sans-semibold ">
+                    {isNoteficationNoSeen}
+                  </p>
+                </div>
+              ) : (
+                ""
+              )}
+            </motion.div>
+            <Link to={"/create"}>
+              <motion.div
+              whileTap={{
+                scale:0.3
+              }} className="w-full h-14 dark:shadow-darkneumorphic dark:border dark:border-[#2b2b2b] dark:bg-[#000000] flex justify-center item cursor-pointer items-center bg-[#fff]  rounded-full shadow-neumorphic hover:shadow-lg">
+                <svg
+                  aria-label="New post"
+                  className="x1lliihq x1n2onr6 x5n08af dark:fill-white"
+                  fill="currentColor"
+                  height="20"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="20"
+                >
+                  <title>New post</title>
+                  <path
+                    d="M2 12v3.45c0 2.849.698 4.005 1.606 4.944.94.909 2.098 1.608 4.946 1.608h6.896c2.848 0 4.006-.7 4.946-1.608C21.302 19.455 22 18.3 22 15.45V8.552c0-2.849-.698-4.006-1.606-4.945C19.454 2.7 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.547 2 5.703 2 8.552Z"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="dark:stroke-white"
+                  ></path>
+                  <line
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="dark:stroke-white"
+                    x1="6.545"
+                    x2="17.455"
+                    y1="12.001"
+                    y2="12.001"
+                  ></line>
+                  <line
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="dark:stroke-white"
+                    x1="12.003"
+                    x2="12.003"
+                    y1="6.545"
+                    y2="17.455"
+                  ></line>
+                </svg>
+              </motion.div>
+            </Link>
             <Link to={"/profile"}>
-              <div className="w-full h-14 flex justify-center dark:border object-cover object-top dark:border-[#2b2b2b] dark:bg-[#000000] dark:shadow-darkneumorphic item items-center cursor-pointer bg-[#fff]  rounded-full shadow-neumorphic hover:shadow-lg ">
+              <motion.div
+              whileTap={{
+                scale:0.3
+              }} className="w-full h-14 flex justify-center dark:border object-cover object-top dark:border-[#2b2b2b] dark:bg-[#000000] dark:shadow-darkneumorphic item items-center cursor-pointer bg-[#fff]  rounded-full shadow-neumorphic hover:shadow-lg ">
                 <div className="h-full w-full rounded-full p-1 ">
                   <img
-                  onLoad={hnadleLode}
+                    onLoad={hnadleLode}
                     src={userData.profileImage}
                     alt=""
                     className="object-cover object-center  w-full h-full  rounded-full"
                   />
                 </div>
-              </div>
+              </motion.div>
             </Link>
-            <div
+            <motion.div
+              whileTap={{
+                scale:0.3
+              }}
               className="w-full  h-14 dark:border dark:border-[#2b2b2b] flex dark:shadow-darkneumorphic dark:bg-[#000000] justify-center item cursor-pointer items-center bg-[#ffff]  rounded-full shadow-neumorphic hover:shadow-lg "
               onClick={handleLogOut}
             >
@@ -390,8 +409,12 @@ setisNoteficationNoSeen(unseenNotifications.length)
                   fill="currentColor"
                 ></path>
               </svg>
-            </div>
-            <div
+            </motion.div>
+            <motion.div
+              whileTap={{
+                scale:0.3
+              }}iv
+
               className="w-full h-14  flex justify-center  dark:shadow-darkneumorphic relative item bg-white cursor-pointer items-center rounded-full shadow-neumorphic hover:shadow-lg overflow-hidden"
               onClick={toggleMode}
             >
@@ -435,7 +458,7 @@ setisNoteficationNoSeen(unseenNotifications.length)
                   ></path>
                 </svg>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

@@ -1,8 +1,10 @@
 import {useRef} from 'react'
 import gsap from 'gsap';
-function CommentComponent() {
-  const circleRef = useRef();
+import PropTypes from "prop-types";
 
+function CommentComponent({comments}) {
+  const circleRef = useRef();
+  
   const handleMouseOver = () =>{
   
     gsap.to(circleRef.current,{
@@ -19,10 +21,9 @@ function CommentComponent() {
     }
     
 
-
   return (
     <div
-    className="flex justify-center items-center p-2 rounded-full  cursor-pointer"
+    className="flex justify-center items-center p-2 rounded-full gap-2 group  cursor-pointer"
     onMouseEnter={handleMouseOver}
     onMouseLeave={handleMouseLeave} 
   >
@@ -45,8 +46,15 @@ function CommentComponent() {
       strokeWidth="2"
     ></path>
   </svg>
+  <p className="text-[#697986] group-hover:text-[#009dff] ibm-plex-sans-medium">
+        {comments.length}
+      </p>
   </div>
   )
+}
+
+CommentComponent.propTypes = {
+  comments:PropTypes.arrayOf(PropTypes.string)
 }
 
 export default CommentComponent

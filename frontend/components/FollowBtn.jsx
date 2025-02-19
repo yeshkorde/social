@@ -37,11 +37,11 @@ function FollowBtn({ user,width }) {
   };
 
   return isyou ? (
-    <button className={`py-1 w-${width} text-sm text-white ibm-plex-sans-semibold  rounded-lg  bg-blue-600 ml-10`}>
+    <button className={`py-1  text-sm text-white ibm-plex-sans-semibold  px-4 rounded-lg bg-[#000] dark:bg-white dark:text-black ml-10`}>
       You
     </button>
   ) : isLoading ? (
-   <div className=" flex justify-center items-center py-1 text-sm text-white ibm-plex-sans-semibold w-20 rounded-lg  bg-blue-600 ml-10">
+   <div className=" flex justify-center items-center py-1 text-sm text-white ibm-plex-sans-semibold w-20 rounded-lg bg-[#000] dark:bg-white dark:text-black ml-10">
      <svg
       width="22"
       height="22"
@@ -93,7 +93,7 @@ function FollowBtn({ user,width }) {
    </div>
   ) : (
     <button
-      className="py-1 text-sm text-white ibm-plex-sans-semibold w-20 rounded-lg  bg-blue-600 ml-10"
+      className="py-1 text-sm text-white ibm-plex-sans-semibold w-20 rounded-lg  bg-[#000] dark:bg-white dark:text-black ml-10"
       onClick={handlFollowing}
     >
       {userData.following.includes(user._id) ? "Unfollow" : "Follow"}
