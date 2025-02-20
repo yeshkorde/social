@@ -25,7 +25,6 @@ function ProfilePage() {
   const moveRef = useRef();
   const [activeSection, setactiveSection] = useState(<PostsSection postes={userData.postes}/>);
 
-console.log(userData);
 
 
   useEffect(() => {
@@ -91,7 +90,7 @@ console.log(userData);
           withCredentials: true,
         }
       );
-      console.log(res.data);
+
       if (res.data.success) {
         setuserData(res.data.currentuser);
         setisProfileChangeOn(false);
@@ -155,6 +154,10 @@ console.log(userData);
       ease: "back.out",
     });
   };
+
+  useEffect(()=>{
+  setactiveSection(<PostsSection postes={userData.postes}/>)
+  },[userData])
 
   return (
     <div

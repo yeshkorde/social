@@ -29,6 +29,7 @@ function HomePage() {
 
   return (
     <div className="h-full w-[200%] flex flex-col justify-center items-center">
+      <div className="w-full h-40 bg-red-500"></div>
       <div className={`w-full flex flex-col gap-6 -translate-x-40 ${
         isOn.isNotificationOn || isOn.isSearchOn ? "-z-[3]" : ""
       }`}>

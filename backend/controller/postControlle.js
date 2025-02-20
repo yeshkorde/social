@@ -58,10 +58,13 @@ export const createPostControlller = async (req, res) => {
     currentUser.postes.push(newPost);
     await currentUser.save();
 
+    
+
     return res.json({
       message: "Post created successfully",
       success: true,
       post: newPost,
+      currentUser,
     });
   } catch (error) {
     console.error("Error creating post:", error);
@@ -92,21 +95,23 @@ export const feedPostController = async (req, res) => {
       followingPostes = followingPostes.concat(user.postes);
     });
 
-    const randomPostes = await postModle.aggregate([
-      { $sample: { size: 10 } },
-      {
-        $lookup: {
-          from: "users",
-          localField: "userId",
-          foreignField: "_id",
-          as: "user",
-        },
-      },
-      { $unwind: "$user" },
-    ]);
+    const randomPosts = await postModle
+    .find()
+    .populate({
+      path: "userId", 
+      modle:"user",
+      populate:({
+        path:"postes"
+      })
+    })
+    .limit(10) 
+    .sort({ createdAt: -1 }); 
+  
+  
+  
 
     const uniquePostes = new Map();
-    [...followingPostes, ...randomPostes].forEach((post) => {
+    [...followingPostes, ...randomPosts].forEach((post) => {
       uniquePostes.set(post._id.toString(), post);
     });
 

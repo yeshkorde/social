@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   HoverCard,
   HoverCardContent,
@@ -6,18 +5,11 @@ import {
 } from "@/components/ui/hover-card";
 
 function UserHoverCard({ trigger, content, userId }) {
-
-useEffect(()=>{
-
-})
-
   return (
-    <HoverCard>
+    <HoverCard openDelay={100} closeDelay={100}>
       <HoverCardTrigger>{trigger}</HoverCardTrigger>
-      <HoverCardContent className="w-80 border-none rounded-xl ">
-        <div className="w-full">
-          <div className="h-14 w-14 rounded-full bg-red-400"></div>
-        </div>
+      <HoverCardContent className="border-none   h-full w-full shadow-2xl shadow-[#c0c0c0] dark:shadow-[#000] translate-x-28  rounded-xl">
+        {content}
       </HoverCardContent>
     </HoverCard>
   );

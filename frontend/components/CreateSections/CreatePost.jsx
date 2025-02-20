@@ -4,12 +4,14 @@ import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 import { motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
+import useUserContext from "../../hooks/UserContextHook";
 function CreatePost() {
   const [files, setfiles] = useState([]);
   const [images, setimages] = useState([]);
   const [linkes, setlinkes] = useState([]);
   const [isLoding, setisLoding] = useState(false);
   const { toast } = useToast();
+  const {setuserData} = useUserContext()
   const inputRef = useRef();
   const navigate = useNavigate();
 
@@ -129,6 +131,7 @@ function CreatePost() {
         toast({
           title: "post created sucessfully",
         });
+        setuserData(res.data.currentUser)
       }
       setisLoding(false);
     } catch (error) {
