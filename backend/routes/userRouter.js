@@ -5,7 +5,6 @@ import {
   followController,
   ChickNotification,
   getAllPostsController,
-  getUserProfiledDataController,
 } from "../controller/userController.js";
 import protect from "../helper/protect.js";
 import upload from "../helper/multer.js";
@@ -27,6 +26,7 @@ route.post("/chickNotifications", ChickNotification);
 
 route.get("/getAllPostes", protect, getAllPostsController);
 
-route.get("/getProfileData", protect,getUserProfiledDataController);
+
+route.post("/savePost",protect)
 
 export default route;

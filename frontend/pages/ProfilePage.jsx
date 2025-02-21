@@ -285,7 +285,7 @@ function ProfilePage() {
                   postes {userData.postes.length}
                 </p>
               </div>
-              <button className="px-3 py-1 bg-black editBtn dark:bg-white dark:text-black cursor-pointer  w-20 mt-4 ibm-plex-sans-semibold text-white rounded-full">
+              <button className="px-3 py-1 bg-black w-20 dark:bg-white text-white dark:text-black rounded-xl text-sm ibm-plex-sans-semibold dark:shadow-[2px_2px_30px] dark:hover:shadow-[#8a8a8a] dark:shadow-[#000] shadow-[#8a8a8a]">
                 Edit
               </button>
             </div>

@@ -168,7 +168,7 @@ try {
     })
   }
 
-  notification.isSeen = true;
+notification.isSeen = true;
 notification.save();
 return res.json({
   message:"notification chicked"
@@ -200,29 +200,12 @@ export const getAllPostsController = async(req,res)=>{
 }
 
 
-export const getUserProfiledDataController = async(req,res)=>{
+export const savePostController = async (req,res)=>{
 try {
-  const {userId} = req.query;
-  const user = await userModle.findOne({_id:userId}).populate({
-    path:"postes",
-    modle:"post",
-  }).populate({
-    path:"followers",
-    modle:"user"
-  }).populate({
-    path:"following",
-    modle:"user"
-  })
-
-  res.json({
-    user,
-  })
-
+  
 } catch (error) {
   res.json({
     error:"internal server error"
   })
-  console.log(error.message);
-  
 }
 }

@@ -62,10 +62,7 @@ const userSchema = new mongoose.Schema(
       },
     ],
     saved: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: "saved",
-      },
+      
     ],
     Notifications: [
       {

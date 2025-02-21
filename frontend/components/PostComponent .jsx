@@ -129,7 +129,7 @@ function PostComponent({ post }) {
                     <FollowBtn user={post.userId} />
                   </div>
                 </div>
-                <div className="columns-3 gap-4 space-y-4 h-[60%] mt-4">
+                <div className="columns-3 gap-4 space-y-4 h-[60%] mt-4 ">
                   {post.userId.postes.slice(0, 3).map((post, index) => (
                     <div
                       key={index}

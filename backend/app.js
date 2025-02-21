@@ -12,6 +12,8 @@ import http from "http"
 import  {initializeSocket} from "./Sockit.js"
 import postRouter from "./routes/postRouter.js"
 import commentRouter from "./routes/commentsRoute.js"
+import folderRoute from "./routes/folderRoute.js"
+
 
 const app = express();
 dotenv.config();
@@ -50,6 +52,9 @@ app.use("/api/auth", authRouter);
 app.use("/api/user",userRouter);
 app.use("/api/post",postRouter);
 app.use("/api/comments",commentRouter);
+app.use("/api/folder",folderRoute)
+
+
 
 server.listen(process.env.PORT, () => {
   console.log(`server is runing on port ${process.env.PORT} `);
